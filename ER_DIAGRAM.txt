@@ -1,0 +1,65 @@
+Copy and paste the following into https://dbdiagram.io:
+
+Table Customers {
+  customer_id INT [primary key]
+  full_name VARCHAR(100)
+  email VARCHAR(100) [unique]
+  phone VARCHAR(15)
+  address TEXT
+  created_at DATE
+}
+
+Table Categories {
+  category_id INT [primary key]
+  category_name VARCHAR(50)
+  description TEXT
+}
+
+Table Products {
+  product_id INT [primary key]
+  name VARCHAR(100)
+  description TEXT
+  price DECIMAL(10,2)
+  stock_quantity INT
+  category_id INT
+}
+
+Table Orders {
+  order_id INT [primary key]
+  customer_id INT
+  order_date DATE
+  order_status VARCHAR(20)
+  total_amount DECIMAL(10,2)
+}
+
+Table Order_Items {
+  order_item_id INT [primary key]
+  order_id INT
+  product_id INT
+  quantity INT
+  unit_price DECIMAL(10,2)
+}
+
+Table Payments {
+  payment_id INT [primary key]
+  order_id INT
+  payment_date DATE
+  payment_method VARCHAR(50)
+  payment_status VARCHAR(20)
+}
+
+Table Shipping {
+  shipping_id INT [primary key]
+  order_id INT
+  shipping_address TEXT
+  shipping_date DATE
+  delivery_date DATE
+  shipping_status VARCHAR(30)
+}
+
+Ref: Customers.customer_id < Orders.customer_id
+Ref: Categories.category_id < Products.category_id
+Ref: Orders.order_id < Order_Items.order_id
+Ref: Products.product_id < Order_Items.product_id
+Ref: Orders.order_id < Payments.order_id
+Ref: Orders.order_id < Shipping.order_id
